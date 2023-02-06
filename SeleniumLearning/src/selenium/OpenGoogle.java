@@ -10,6 +10,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ByIdOrName;
 
+import dev.failsafe.internal.util.Assert;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import io.netty.channel.pool.FixedChannelPool.AcquireTimeoutAction;
 
 public class OpenGoogle {
@@ -17,7 +19,7 @@ public class OpenGoogle {
 	public static void main(String[] args) {
 		
 		
-		System.setProperty("webdriver.chrome.driver", "C:\\Users\\Arjun\\Desktop\\Selenium Jars and Drivers\\drivers\\chromedriver\\chromedriver.exe");
+		WebDriverManager.chromedriver().setup();
 		
 		WebDriver driver = new ChromeDriver();
 		
@@ -33,13 +35,20 @@ public class OpenGoogle {
 		
 		driver.findElement(By.xpath("/html/body/div[4]/form/div/input")).sendKeys("arjun@novade.net");
 		
-		driver.findElement(By.xpath("/html/body/div[4]/form/div/div[2]/button")).click();
+		driver.findElement(By.className("right")).click();
 		
 		driver.findElement(By.xpath("/html/body/div[4]/form/div/input[2]")).sendKeys("arjun2023");
 
-		driver.findElement(By.xpath("/html/body/div[4]/form/div/div[2]/button")).click();
+		driver.findElement(By.className("right")).click();
 		
-				
+		
+		if ( driver.getPageSource().contains("Accounts.start")){
+	         System.out.println("User logged in successfully");
+	      } else {
+	         System.out.println("Login failed or Error loading Welcome page");
+							
 		}
+
+	}
 
 }
